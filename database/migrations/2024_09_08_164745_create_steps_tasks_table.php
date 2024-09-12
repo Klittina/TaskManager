@@ -12,10 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('steps_tasks', function (Blueprint $table) {
-            $table->id();
+            $table->id('step_id')->primary();
+            $table->foreignId('task_id')->constrained('tasks_tasks', 'task_id');
+            $table->string('text');
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.
