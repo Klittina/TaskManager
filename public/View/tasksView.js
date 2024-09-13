@@ -1,20 +1,20 @@
 import taskView from "./taskView.js";
 
 class tasksView {
-    constructor(tomb, szuloElem) {
-        szuloElem.html(`<div class="foDivTask"></div>`);
-        this.divElem = szuloElem.children("div:last-child");
+    constructor(tomb, parent) {
+        parent.html(`<div class="foDivTask"></div>`);
+        this.divElem = parent.children("div:last-child");
 
         tomb.forEach(task => {
             new taskView(task, this.divElem);
         });
 
-        szuloElem.append(`<div id="ujtask">Új task hozzáadása</div>`);
-        $("#ujtask").on('click', () => this.ujTaskInput());
+        parent.append(`<div id="newtask">Új task hozzáadása</div>`);
+        $("#newtask").on('click', () => this.newTaskInput());
         window.addEventListener("taskUpdated", (event) => this.handleTaskUpdate(event));
     }
     
-    ujTaskInput() {
+    newTaskInput() {
         if ($("#ujtaskInput").length === 0) {
             this.divElem.append(`
                 <div id="ujtaskInput" class="task-input-div">
@@ -47,7 +47,6 @@ class tasksView {
 
     handleTaskUpdate(event) {
         const { task_id, task_name } = event.detail;
-        console.log(`Task updated: ${task_id}, new name: ${task_name}`);
     }
 }
 

@@ -15,7 +15,6 @@ class taskModel {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log("Új adat", data);
             if (typeof callback === 'function') {
                 callback(data);
             } else {
@@ -28,7 +27,6 @@ class taskModel {
     }
 
     newTaskAdded(url, taskData, callback) {
-        console.log('Request URL:', url); 
         fetch(url, {
             method: 'POST',
             headers: {
@@ -44,7 +42,6 @@ class taskModel {
             return response.json();
         })
         .then(data => {
-            console.log("Task added:", data);
             callback(data);
         })
         .catch(error => {
@@ -53,8 +50,6 @@ class taskModel {
     }
     
     adatTorol(vegpont, taskId) {
-        console.log("Törlöm: ", taskId);
-    
         fetch(`${vegpont}/${taskId}`, {
             method: "DELETE",
             headers: {
@@ -77,7 +72,6 @@ class taskModel {
     }
     
     updateTask(url, taskData, callback) {
-        console.log('Request URL:', url);
         fetch(url, {
             method: 'PUT',
             headers: {

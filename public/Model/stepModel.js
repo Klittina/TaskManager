@@ -13,7 +13,6 @@ class stepModel {
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Lépések adat", data);
             callback(data);
         })
         .catch(error => {
@@ -22,7 +21,6 @@ class stepModel {
     }
 
     newStepAdded(url, stepData, callback) {
-        console.log('URL in newStepAdded:', url);
         fetch(url, {
             method: 'POST',
             headers: {
@@ -47,7 +45,6 @@ class stepModel {
     }
     
     deleteStep(vegpont, stepId) {
-        console.log("Deleting step at URL:", `${vegpont}/${stepId}`);
         fetch(`${vegpont}/${stepId}`, {
             method: 'DELETE',
             headers: {
@@ -88,7 +85,6 @@ class stepModel {
             return response.json();
         })
         .then(data => {
-            console.log("Task updated:", data);
             callback(data);
         })
         .catch(error => {

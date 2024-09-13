@@ -38,7 +38,6 @@ class taskManagerController {
 
         $(window).on("taskDelete", (event) => {
             const taskId = event.detail.task_id;
-            console.log("Törlés controllerben: ", taskId);
             this.taskmodel.adatTorol('/api/tasks', taskId);
             this.taskmodel.adatBe(this.vegpont1, (data) => {
                 new tasksView(data, $("#aside"));
@@ -48,8 +47,8 @@ class taskManagerController {
 
         $(window).on("stepDelete", (event) => {
             const stepId = event.detail.step_id;
-            console.log("Törlés step controllerben: ", stepId);
             this.stepmodel.deleteStep('/api/steps', stepId);
+            location.reload();
             this.showSteps(this.currentTaskId);
         });
         
@@ -58,11 +57,12 @@ class taskManagerController {
 
     newTaskAdded(task_name) {
         this.taskmodel.newTaskAdded(this.vegpont3, { task_name: task_name }, (data) => {
+            location.reload();
             this.taskmodel.adatBe(this.vegpont1, (data) => {
                 new tasksView(data, $("#aside"));
             });
         });
-        location.reload();
+        
     }
 
      newStepAdded(text) {
@@ -76,29 +76,25 @@ class taskManagerController {
     }
 
     showSteps(taskId) {
-        console.log("Steps betöltése a következő Task ID-hez:", taskId);
         this.stepmodel.adatBe(`${this.vegpont2}/${taskId}`, (data) => {
-            console.log("Steps adatok:", data);
             new stepsView(data, $("#section"), taskId);
         });
     }
     updateTask(task_id, task_name) {
-        console.log("updatelek egy taskot", task_id, task_name)
         const url = `/tasks/${task_id}`;
         const taskData = { task_name };
 
         this.taskmodel.updateTask(url, taskData, (response) => {
-            console.log("Task updated:", response);
+            location.reload();
         });
     }
 
     updateStep(step_id, text) {
-        console.log("updatelek egy steppet", step_id, text)
         const url = `/steps/${step_id}`;
         const stepData = { text };
 
         this.stepmodel.updateStep(url, stepData, (response) => {
-            console.log("Task updated:", response);
+            location.reload();
         });
     }
 }

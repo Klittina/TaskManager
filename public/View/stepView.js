@@ -15,34 +15,31 @@ class stepView {
         );
 
         this.tablaElem = szuloElem.children("div:last-child");
-        this.torolElem = $(`#delstep${elem.step_id}`);
-        this.szerkesztElem = $(`#modstep${elem.step_id}`);
+        this.deleteThis = $(`#delstep${elem.step_id}`);
+        this.modThis = $(`#modstep${elem.step_id}`);
         this.stepTextElem = $(`#stepText${elem.step_id}`);
 
-        this.torolElem.on("click", () => {
-            console.log("Töröltem");
-            this.kattintasTrigger("stepDelete");
+        this.deleteThis.on("click", () => {
+            this.clickTrigger("stepDelete");
         });
 
-        this.szerkesztElem.on("click", () => {
-            console.log("Szerkesztem a steppet");
-            this.szerkesztesTrigger();
+        this.modThis.on("click", () => {
+            this.modifyTrigger();
         });
     }
 
-    kattintasTrigger(esemenynev) {
-        const esemeny = new CustomEvent(esemenynev, { 
+    clickTrigger(eventname) {
+        const event = new CustomEvent(eventname, { 
             detail: { 
                 step_id: this.#elem.step_id, 
                 task_id: this.#task_id  
             }
         });
-        window.dispatchEvent(esemeny);
-        console.log("Nyomódott a step:", this.#elem.step_id);
+        window.dispatchEvent(event);
     }
     
 
-    szerkesztesTrigger() {
+    modifyTrigger() {
         if ($(`#editStepInput${this.#elem.step_id}`).length === 0) {
             this.stepTextElem.html(`
                 <input type="text" id="editStepInput${this.#elem.step_id}" value="${this.#elem.text}">
@@ -61,14 +58,14 @@ class stepView {
             $(`#editStepInput${this.#elem.step_id}`).remove();
             $(`#saveStepButton${this.#elem.step_id}`).remove();
 
-            const esemeny = new CustomEvent("stepUpdated", {
+            const event = new CustomEvent("stepUpdated", {
                 detail: { 
                     step_id: this.#elem.step_id, 
                     text: updatedText, 
                     task_id: this.#task_id
                 }
             });
-            window.dispatchEvent(esemeny);
+            window.dispatchEvent(event);
         }
     }
 }

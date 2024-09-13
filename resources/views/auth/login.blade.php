@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bejelentkezés</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  <style type="text/css">
-    body{
-      background: #F8F9FA;
-    }
-  </style>
+  <link rel="stylesheet" href="/CSS/index.css">
 </head>
-<body>
-
+<body class="loginreg">
+<header> <h1>Task Manager 2024</h1></header>
 <section class="bg-light py-3 py-md-5">
   <div class="container">
     <div class="row justify-content-center">
@@ -20,7 +16,7 @@
         <div class="card border border-light-subtle rounded-3 shadow-sm mt-5">
           <div class="card-body p-3 p-md-4 p-xl-5">
             
-            <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Jelentkezzen be fiókjába!</h2>
+            <h2 class="text-center whatshouldido">Bejelentkezés</h2>
             <form method="POST" action="{{ route('login.post') }}">
               @csrf
 
@@ -56,12 +52,11 @@
                 <div class="col-12">
                   <div class="d-flex gap-2 justify-content-between">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" name="rememberMe" id="rememberMe">
+                    <input class="form-check-input" type="checkbox" value="1" name="remember" id="rememberMe">
                       <label class="form-check-label text-secondary" for="rememberMe">
                         Maradjon bejelentkezve
                       </label>
                     </div>
-                    <a href="#!" class="link-primary text-decoration-none">{{ __('Elfelejtette jeszavát?') }}</a>
                   </div>
                 </div>
                 <div class="col-12">
@@ -80,6 +75,8 @@
     </div>
   </div>
 </section>
-
+<footer>
+        © 2024 Task Manager by Szedlár Krisztina
+    </footer>
 </body>
 </html>

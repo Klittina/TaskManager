@@ -10,7 +10,7 @@
     <script type="module" src="base.js"></script>
 </head>
 <body>
-    <header> <h1 id="fasz">Task Manager 2024</h1></header>
+    <header> <h1>Task Manager 2024</h1></header>
     <nav>
     <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                         

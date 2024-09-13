@@ -8,15 +8,12 @@ class stepsView {
         tomb.forEach(step => {
             new stepView(step, this.divElem);
         });
-
-        szuloElem.append(`<div id="ujstep">Új step hozzáadása</div>`);
-
-        $("#ujstep").on('click', () => this.ujStepInput());
-
+        szuloElem.append(`<div id="newstep">Új step hozzáadása</div>`);
+        $("#newstep").on('click', () => this.newStepInput());
         window.addEventListener("stepUpdated", (event) => this.handleStepUpdate(event));
     }
     
-    ujStepInput() {
+    newStepInput() {
         if ($("#ujstepInput").length === 0) {
             this.divElem.append(`
                 <div id="ujstepInput" class="step-input-div">
@@ -29,7 +26,6 @@ class stepsView {
     }
     addNewStep() {
         const newStepText = $("#newStepText").val();
-        
         if (newStepText.trim() !== "") {
             this.divElem.append(`
                 <div class="step">
@@ -38,16 +34,15 @@ class stepsView {
             `);
             $("#ujstepInput").remove();
 
-            const esemeny = new CustomEvent("newStepAdded", {
+            const event = new CustomEvent("newStepAdded", {
                 detail: { text: newStepText }
             });
-            window.dispatchEvent(esemeny);
+            window.dispatchEvent(event);
         }
     }
 
     handleStepUpdate(event) {
         const { step_id, text } = event.detail;
-        console.log(`Step updated: ${step_id}, new text: ${text}`);
     }
 }
 

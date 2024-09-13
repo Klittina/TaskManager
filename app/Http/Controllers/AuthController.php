@@ -38,20 +38,22 @@ class AuthController extends Controller
      * @return response()
      */
     public function postLogin(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-   
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
-                        ->withSuccess('You have Successfully loggedin');
-        }
-  
-        return redirect("login")->withError('Oppes! You have entered invalid credentials');
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    $credentials = $request->only('email', 'password');
+    $remember = $request->has('remember');
+    if (Auth::attempt($credentials, $remember)) { 
+        return redirect()->intended('dashboard')
+                         ->withSuccess('Sikeresen bejelentkezett.');
     }
+    return redirect("login")->withError('Helytelen bejelentkezési adatok.');
+}
+
+
       
     /**
      * Write code on Method
@@ -59,21 +61,22 @@ class AuthController extends Controller
      * @return response()
      */
     public function postRegistration(Request $request): RedirectResponse
-    {  
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
+{  
+    $request->validate([
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6|confirmed'
+    ]);
            
-        $data = $request->all();
-        $user = $this->create($data);
+    $data = $request->all();
+    $user = $this->create($data);
             
-        Auth::login($user); 
+    Auth::login($user); 
 
-        return redirect('/dashboard')->withSuccess('Great! You have Successfully logged in');
-    }
+    return redirect('/dashboard')->withSuccess('Great! You have Successfully logged in');
+}
+
     
     /**
      * Write code on Method
